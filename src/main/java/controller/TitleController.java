@@ -1,3 +1,6 @@
+package controller;
+
+import dao.TranslationDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.util.Locale;

@@ -1,8 +1,21 @@
+package dao;
+
+import db.Database;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TranslationDAO {
+
+    // Private constructor to prevent instantiation
+    private TranslationDAO() {
+        throw new UnsupportedOperationException("Utility class cannot be instantiated");
+    }
+
+    private static final Logger LOGGER = Logger.getLogger(TranslationDAO.class.getName());
 
     public static List<String> getTranslations(String languageCode) {
         List<String> translations = new ArrayList<>();
@@ -17,18 +30,16 @@ public class TranslationDAO {
             while (rs.next()) {
                 String key = rs.getString("Key_name");
                 String text = rs.getString("translation_text");
-                translations.add(key + " : " + text); // combine key + translation
+                translations.add(key + " : " + text);
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error fetching translations", e);
         }
 
         return translations;
     }
 
-
-    // Add a new translation
     public static void addTranslation(String key, String language, String text) {
         String sql = "INSERT INTO translations (Key_name, Language_code, translation_text) VALUES (?, ?, ?)";
 
@@ -41,8 +52,7 @@ public class TranslationDAO {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error adding translation", e);
         }
     }
 }
-
