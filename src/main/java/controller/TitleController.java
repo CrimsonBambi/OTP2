@@ -78,13 +78,10 @@ public class TitleController {
             return;
         }
 
-        // Add translation to database
         TranslationDAO.addTranslation(key, currentLanguageCode, translation);
 
-        // Refresh the list to show new translation
         refreshListView();
 
-        // Clear input fields
         keyField.clear();
         translationField.clear();
     }
